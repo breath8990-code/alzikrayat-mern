@@ -42,7 +42,7 @@ export default function PhotoDetail() {
     if (!window.confirm('Delete this photo and its comments?')) return;
     setDeleting(true);
     try {
-      await deletePhoto(id, user._id);
+      await deletePhoto(id);
       navigate('/photos');
     } catch (err) {
       setError(err.message);

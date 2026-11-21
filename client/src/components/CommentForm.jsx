@@ -24,7 +24,7 @@ export default function CommentForm({ photoId, onAdded }) {
     setSending(true);
     setError(null);
     try {
-      const saved = await createComment(photoId, text, user._id);
+      const saved = await createComment(photoId, text);
       onAdded(saved);
       setText('');
     } catch (err) {

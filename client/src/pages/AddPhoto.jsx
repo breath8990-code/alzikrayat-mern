@@ -33,7 +33,7 @@ export default function AddPhoto() {
       formData.append('title', title);
       formData.append('description', description);
       formData.append('photo', file); // the file goes last so the text fields arrive first
-      const photo = await createPhoto(formData, user._id);
+      const photo = await createPhoto(formData);
       navigate(`/photos/${photo._id}`);
     } catch (err) {
       setError(err);
