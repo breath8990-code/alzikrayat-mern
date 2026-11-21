@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { registerUser } from '../api.js';
+import { useAuth } from '../context/AuthContext.jsx';
 import ErrorAlert from './ErrorAlert.jsx';
 
 const emptyForm = {
   firstName: '', lastName: '', email: '', password: '', location: '', occupation: '', description: '',
 };
 
-// Props: onSuccess() called after the account has been created
+// Props: onSuccess() called after the account has been created and the user is logged in
 export default function RegisterForm({ onSuccess }) {
+  const { login } = useAuth();
   const [form, setForm] = useState(emptyForm);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
@@ -19,7 +21,9 @@ export default function RegisterForm({ onSuccess }) {
     setSending(true);
     setError(null);
     try {
-      await registerUser(form);
+      // the API sends back a token, so the new user is logged in right away
+      const { token, user } = await registerUser(form);
+      login(user, token);
       onSuccess();
     } catch (err) {
       setError(err);

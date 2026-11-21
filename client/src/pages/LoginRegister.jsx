@@ -9,17 +9,11 @@ export default function LoginRegister() {
   const navigate = useNavigate();
   const location = useLocation();
   const [mode, setMode] = useState('login'); // 'login' or 'register'
-  const [justRegistered, setJustRegistered] = useState(false);
 
   const goBack = () => navigate(location.state?.from || '/', { replace: true });
 
   // Already logged in (for example right after a successful login)
   if (user) return <Navigate to={location.state?.from || '/'} replace />;
-
-  const handleRegistered = () => {
-    setJustRegistered(true);
-    setMode('login');
-  };
 
   return (
     <div className="auth-card mx-auto">
@@ -33,15 +27,12 @@ export default function LoginRegister() {
       {mode === 'login' ? (
         <>
           <h1 className="h3 mb-3">Welcome back</h1>
-          {justRegistered && (
-            <div className="alert alert-success" role="status">Account created. Log in to continue.</div>
-          )}
           <LoginForm onSuccess={goBack} />
         </>
       ) : (
         <>
           <h1 className="h3 mb-3">Create your account</h1>
-          <RegisterForm onSuccess={handleRegistered} />
+          <RegisterForm onSuccess={goBack} />
         </>
       )}
     </div>

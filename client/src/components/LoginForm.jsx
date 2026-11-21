@@ -17,8 +17,8 @@ export default function LoginForm({ onSuccess }) {
     setSending(true);
     setError(null);
     try {
-      const user = await loginUser(form);
-      login(user);
+      const { token, user } = await loginUser(form);
+      login(user, token);
       onSuccess();
     } catch (err) {
       setError(err);
